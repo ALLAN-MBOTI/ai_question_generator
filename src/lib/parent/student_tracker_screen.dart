@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/performance_provider.dart';
-import '../../providers/auth_provider.dart'; // Import Auth Provider
+import '../../models/performance_model.dart';
+import '../../providers/auth_provider.dart';
 
 class StudentTrackerScreen extends ConsumerWidget {
   const StudentTrackerScreen({super.key});
@@ -23,6 +24,7 @@ class StudentTrackerScreen extends ConsumerWidget {
         body: Center(child: Text(performanceState.errorMessage!)),
       );
     }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Performance Tracker'),
@@ -33,7 +35,6 @@ class StudentTrackerScreen extends ConsumerWidget {
                 .read(performanceNotifierProvider.notifier)
                 .fetchPerformances(),
           ),
-          // --- NEW: Logout Button ---
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
@@ -43,7 +44,19 @@ class StudentTrackerScreen extends ConsumerWidget {
           ),
         ],
       ),
-      // ... (Existing body content)
+      body: performanceState.performances.isEmpty
+          ? const Center(
+              child: Text(
+                'No performance data found for your linked students.',
+              ),
+            )
+          : ListView.builder(
+              itemCount: performanceState.performances.length,
+              itemBuilder: (context, index) {
+                final p = performanceState.performances[index];
+                return PerformanceTile(performance: p);
+              },
+            ),
     );
   }
 }
@@ -71,7 +84,7 @@ class PerformanceTile extends StatelessWidget {
       ),
       trailing: Text('${performance.score}/${performance.totalQuestions}'),
       onTap: () {
-        // TODO: Implement navigation to a detailed result screen
+        // Detailed view of the session
       },
     );
   }

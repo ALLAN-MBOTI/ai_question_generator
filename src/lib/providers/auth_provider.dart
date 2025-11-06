@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart'; // Used for dioProvider
+import 'package:shared_preferences/shared_preferences.dart'; // Used for sharedPreferencesProvider
 import '../models/user_model.dart';
 import '../services/auth_service.dart';
 
@@ -82,7 +83,6 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((
 final dioProvider = Provider((ref) => Dio());
 
 final authServiceProvider = Provider<AuthService>((ref) {
-  // Use .when to wait for sharedPreferencesProvider to resolve
   final prefsAsync = ref.watch(sharedPreferencesProvider);
   final dio = ref.watch(dioProvider);
 

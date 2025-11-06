@@ -9,7 +9,7 @@ class QuestionResult with _$QuestionResult {
   const factory QuestionResult({
     required String questionId,
     required String chosenAnswer,
-    required String correctAnswer, // Include the correct answer for review
+    required String correctAnswer,
     required bool isCorrect,
   }) = _QuestionResult;
 
@@ -20,14 +20,17 @@ class QuestionResult with _$QuestionResult {
 /// Represents a student's performance on a single practice session.
 @freezed
 class Performance with _$Performance {
+  // REQUIRED FIX: This private constructor is necessary because we have a custom getter (`percentage`).
+  const Performance._();
+
   const factory Performance({
     required String id,
-    required String studentId, // Who took the test
+    required String studentId,
     required String studentName,
     required DateTime date,
     required String topic,
     required int totalQuestions,
-    required int score, // Number of correct answers
+    required int score,
     required List<QuestionResult> details,
   }) = _Performance;
 

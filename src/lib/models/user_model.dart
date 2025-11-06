@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_model.freezed.dart';
-part 'user_model.g.dart'; // Generated file for JSON serialization
+part 'user_model.g.dart';
 
 /// Defines the fixed user roles in the system.
 enum UserRole {
@@ -21,7 +21,7 @@ class User with _$User {
     required String email,
     required String name,
     required UserRole role,
-    @Default('') String token, // Token for authenticated requests
+    @Default('') String token,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

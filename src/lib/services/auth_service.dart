@@ -31,7 +31,6 @@ class AuthService {
         data: {'email': email, 'password': password},
       );
 
-      // Assuming API returns {'user': {...}, 'token': '...'}
       final token = response.data['token'] as String;
       final userJson = response.data['user'] as Map<String, dynamic>;
       final user = User.fromJson(userJson).copyWith(token: token);
@@ -39,7 +38,6 @@ class AuthService {
       await _saveUserSession(user, token);
       return user;
     } on DioException catch (e) {
-      // Custom error handling for Dio (e.g., status codes, network errors)
       throw Exception(
         'Sign In Failed: ${e.response?.data['message'] ?? e.message}',
       );
@@ -59,7 +57,7 @@ class AuthService {
           'name': name,
           'email': email,
           'password': password,
-          'role': role.toJson(), // Use the enum's JSON value
+          'role': role.toJson(),
         },
       );
 
@@ -76,7 +74,6 @@ class AuthService {
     }
   }
 
-  // Initial check to see if a user is already logged in
   Future<User?> checkAuthStatus() async {
     final token = _prefs.getString(AppConstants.userTokenKey);
     final userJsonString = _prefs.getString(AppConstants.userDataKey);
@@ -94,7 +91,6 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    // In a real app, you might call a /logout endpoint here
     await clearUserSession();
   }
 }
